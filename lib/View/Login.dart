@@ -34,6 +34,8 @@ class _LoginState extends State<Login> {
               showTexts("Password"),
               showTextField("Enter your email", password, true),
               showButton("Log In", () => Get.to(() => const Register())),
+              SizedBox(height: size.height * 0.01),
+              accountText("Dont have an account? ", "Sign Up")
             ],
           ),
         ),
@@ -135,6 +137,27 @@ class _LoginState extends State<Login> {
           letterSpacing: 0.001,
         ),
       ),
+    );
+  }
+
+  Widget accountText(String text_1, String text_2) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [showTexts(text_1), greenText(text_2)],
+      ),
+    );
+  }
+
+  Widget greenText(String text) {
+    return Text(
+      text,
+      style: GoogleFonts.quicksand(
+          fontSize: 16,
+          color: Colors.green,
+          fontWeight: FontWeight.w500,
+          letterSpacing: 0.001),
     );
   }
 }

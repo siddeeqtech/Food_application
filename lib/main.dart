@@ -8,7 +8,7 @@ void main() {
     theme: ThemeData(
       primaryColor: const Color.fromARGB(255, 83, 117, 117),
     ),
-    home: const Home(),
+    home: const Welcome(),
     debugShowCheckedModeBanner: false,
   ));
 }

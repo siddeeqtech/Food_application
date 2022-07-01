@@ -4,14 +4,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mongo_authentication/View/background.dart';
 import 'package:mongo_authentication/View/location.dart';
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class Welcome extends StatefulWidget {
+  const Welcome({Key? key}) : super(key: key);
 
   @override
-  State<Home> createState() => _HomeState();
+  State<Welcome> createState() => _WelcomeState();
 }
 
-class _HomeState extends State<Home> {
+class _WelcomeState extends State<Welcome> {
   @override
   Widget build(BuildContext context) {
     return BackGround(

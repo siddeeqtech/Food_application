@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'Home.dart';
+
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
 
@@ -39,9 +41,9 @@ class _RegisterState extends State<Register> {
               rowText("By continuing you agree to our ", "Terms of Service"),
               rowText("and", "Privacy Policy"),
               SizedBox(height: size.height * 0.01),
-              showButton("Sign Up", () => Get.to(() => const Register())),
+              showButton("Sign Up", () => Get.to(() => const Home())),
               SizedBox(height: size.height * 0.01),
-              accountText("Already have an account? ", "Sign Up")
+              accountText("Already have an account? ", "Sign in")
             ],
           ),
         ),

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'Home.dart';
+import 'Login.dart';
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -25,6 +26,7 @@ class _RegisterState extends State<Register> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              getBack(),
               showImage("carrot"),
               showTitle("Sign Up"),
               showTexts("Enter your credentials to continue"),
@@ -38,8 +40,10 @@ class _RegisterState extends State<Register> {
               showTexts("Password"),
               showTextField("Enter your email", password, true),
               SizedBox(height: size.height * 0.02),
-              rowText("By continuing you agree to our ", "Terms of Service"),
-              rowText("and", "Privacy Policy"),
+              rowText("By continuing you agree to our ", "Terms of Service",
+                  () => Get.to(() => const Home())),
+              rowText(
+                  "and", " Privacy Policy", () => Get.to(() => const Home())),
               SizedBox(height: size.height * 0.01),
               showButton("Sign Up", () => Get.to(() => const Home())),
               SizedBox(height: size.height * 0.01),
@@ -159,12 +163,15 @@ class _RegisterState extends State<Register> {
     );
   }
 
-  Widget rowText(String text_1, String text_2) {
+  Widget rowText(String text_1, String text_2, Function() function) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
-        children: [showTexts(text_1), greenText(text_2)],
+        children: [
+          showTexts(text_1),
+          InkWell(onTap: function, child: greenText(text_2))
+        ],
       ),
     );
   }
@@ -174,7 +181,29 @@ class _RegisterState extends State<Register> {
       padding: const EdgeInsets.symmetric(vertical: 2),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [showTexts(text_1), greenText(text_2)],
+        children: [
+          showTexts(text_1),
+          InkWell(
+              onTap: () => Get.to(() => const Login()),
+              child: greenText(text_2))
+        ],
+      ),
+    );
+  }
+
+  Widget getBack() {
+    return InkWell(
+      onTap: () => Get.back(),
+      child: Container(
+        height: 50,
+        width: 50,
+        decoration: const BoxDecoration(
+          color: Colors.transparent,
+        ),
+        child: const Icon(
+          Icons.arrow_back_ios,
+          color: Colors.black54,
+        ),
       ),
     );
   }

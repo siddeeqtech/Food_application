@@ -24,6 +24,7 @@ class _LoginState extends State<Login> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              getBack(),
               showImage("carrot"),
               showTitle("Loging"),
               showTexts("Enter your emails and passwords"),
@@ -33,9 +34,11 @@ class _LoginState extends State<Login> {
               SizedBox(height: size.height * 0.05),
               showTexts("Password"),
               showTextField("Enter your email", password, true),
+              forgotPassword("Forgot password?"),
               showButton("Log In", () => Get.to(() => const Register())),
-              SizedBox(height: size.height * 0.01),
-              accountText("Dont have an account? ", "Sign Up")
+              SizedBox(height: size.height * 0.001),
+              accountText("Dont have an account? ", "Sign Up",
+                  () => Get.to(() => const Register()))
             ],
           ),
         ),
@@ -91,7 +94,7 @@ class _LoginState extends State<Login> {
 
   Widget showButton(String text, Function() onPressed) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 25),
+      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
       child: SizedBox(
         height: MediaQuery.of(context).size.height * 0.08,
         width: MediaQuery.of(context).size.width,
@@ -140,12 +143,15 @@ class _LoginState extends State<Login> {
     );
   }
 
-  Widget accountText(String text_1, String text_2) {
+  Widget accountText(String text_1, String text_2, Function() function) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [showTexts(text_1), greenText(text_2)],
+        children: [
+          showTexts(text_1),
+          InkWell(onTap: function, child: greenText(text_2))
+        ],
       ),
     );
   }
@@ -158,6 +164,42 @@ class _LoginState extends State<Login> {
           color: Colors.green,
           fontWeight: FontWeight.w500,
           letterSpacing: 0.001),
+    );
+  }
+
+  Widget forgotPassword(String text) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 5),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Text(
+            text,
+            style: GoogleFonts.quicksand(
+                fontSize: 16,
+                color: Colors.green,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0.001),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget getBack() {
+    return InkWell(
+      onTap: () => Get.back(),
+      child: Container(
+        height: 50,
+        width: 50,
+        decoration: const BoxDecoration(
+          color: Colors.transparent,
+        ),
+        child: const Icon(
+          Icons.arrow_back_ios,
+          color: Colors.black54,
+        ),
+      ),
     );
   }
 }

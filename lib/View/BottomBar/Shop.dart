@@ -10,7 +10,7 @@ class Shop extends StatefulWidget {
 }
 
 class _ShopState extends State<Shop> {
-  final controller = FloatingSearchBarController();
+  final controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +20,7 @@ class _ShopState extends State<Shop> {
         children: [
           showImage("carrot"),
           cityTexts("Dhoka", "Banassre"),
-          showSearch()
+          showSearch(),
         ],
       ),
     ));
@@ -86,51 +86,29 @@ class _ShopState extends State<Shop> {
   }
 
   Widget showSearch() {
-    final isPortrait =
-        MediaQuery.of(context).orientation == Orientation.portrait;
-    return FloatingSearchBar(
-      hint: 'Search...',
-      scrollPadding: const EdgeInsets.only(top: 16, bottom: 56),
-      transitionDuration: const Duration(milliseconds: 800),
-      transitionCurve: Curves.easeInOut,
-      physics: const BouncingScrollPhysics(),
-      axisAlignment: isPortrait ? 0.0 : -1.0,
-      openAxisAlignment: 0.0,
-      width: isPortrait ? 600 : 500,
-      debounceDelay: const Duration(milliseconds: 500),
-      onQueryChanged: (query) {
-        // Call your model, bloc, controller here.
-      },
-      // Specify a custom transition to be used for
-      // animating between opened and closed stated.
-      transition: CircularFloatingSearchBarTransition(),
-      actions: [
-        FloatingSearchBarAction(
-          showIfOpened: false,
-          child: CircularButton(
-            icon: const Icon(Icons.place),
-            onPressed: () {},
-          ),
+    final size = MediaQuery.of(context).size;
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(5, 1, 25, 0),
+      child: SizedBox(
+        width: size.width,
+        child: TextFormField(
+          cursorWidth: 1,
+          obscureText: false,
+          decoration: InputDecoration(
+              contentPadding: const EdgeInsets.all(12),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              // icon: Icon(Icons.mail,size:30,color: Colors.black),
+              filled: true,
+              hintStyle: TextStyle(color: Colors.grey[800]),
+              hoverColor: Colors.red,
+              hintText: "Search Store",
+              prefixIcon: const Icon(Icons.search),
+              fillColor: Colors.grey[200]),
+          controller: controller,
         ),
-        FloatingSearchBarAction.searchToClear(
-          showIfClosed: false,
-        ),
-      ],
-      builder: (context, transition) {
-        return ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: Material(
-            color: Colors.white,
-            elevation: 4.0,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: Colors.accents.map((color) {
-                return Container(height: 112, color: color);
-              }).toList(),
-            ),
-          ),
-        );
-      },
+      ),
     );
   }
 }

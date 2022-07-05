@@ -4,6 +4,7 @@ import 'package:get/route_manager.dart';
 import 'View/Welcome.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(GetMaterialApp(
     theme: ThemeData(
       primaryColor: const Color.fromARGB(255, 83, 117, 117),

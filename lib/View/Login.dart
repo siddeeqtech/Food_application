@@ -19,27 +19,29 @@ class _LoginState extends State<Login> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              getBack(),
-              showImage("carrot"),
-              showTitle("Loging"),
-              showTexts("Enter your emails and passwords"),
-              SizedBox(height: size.height * 0.05),
-              showTexts("Email"),
-              showTextField("Enter your email", email, false),
-              SizedBox(height: size.height * 0.05),
-              showTexts("Password"),
-              showTextField("Enter your email", password, true),
-              forgotPassword("Forgot password?"),
-              showButton("Log In", () => Get.to(() => const Register())),
-              SizedBox(height: size.height * 0.001),
-              accountText("Dont have an account? ", "Sign Up",
-                  () => Get.to(() => const Register()))
-            ],
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                getBack(),
+                showImage("carrot"),
+                showTitle("Loging"),
+                showTexts("Enter your emails and passwords"),
+                SizedBox(height: size.height * 0.05),
+                showTexts("Email"),
+                showTextField("Enter your email", email, false),
+                SizedBox(height: size.height * 0.05),
+                showTexts("Password"),
+                showTextField("Enter your email", password, true),
+                forgotPassword("Forgot password?"),
+                showButton("Log In", () => Get.to(() => const Register())),
+                SizedBox(height: size.height * 0.001),
+                accountText("Dont have an account? ", "Sign Up",
+                    () => Get.to(() => const Register()))
+              ],
+            ),
           ),
         ),
       ),

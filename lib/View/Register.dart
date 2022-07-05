@@ -21,34 +21,36 @@ class _RegisterState extends State<Register> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              getBack(),
-              showImage("carrot"),
-              showTitle("Sign Up"),
-              showTexts("Enter your credentials to continue"),
-              SizedBox(height: size.height * 0.05),
-              showTexts("Username"),
-              showTextField("Enter your name", email, false),
-              SizedBox(height: size.height * 0.05),
-              showTexts("Email"),
-              showTextField("Enter your email", email, false),
-              SizedBox(height: size.height * 0.05),
-              showTexts("Password"),
-              showTextField("Enter your email", password, true),
-              SizedBox(height: size.height * 0.02),
-              rowText("By continuing you agree to our ", "Terms of Service",
-                  () => Get.to(() => const Home())),
-              rowText(
-                  "and", " Privacy Policy", () => Get.to(() => const Home())),
-              SizedBox(height: size.height * 0.01),
-              showButton("Sign Up", () => Get.to(() => const Home())),
-              SizedBox(height: size.height * 0.01),
-              accountText("Already have an account? ", "Sign in")
-            ],
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                getBack(),
+                showImage("carrot"),
+                showTitle("Sign Up"),
+                showTexts("Enter your credentials to continue"),
+                SizedBox(height: size.height * 0.05),
+                showTexts("Username"),
+                showTextField("Enter your name", email, false),
+                SizedBox(height: size.height * 0.05),
+                showTexts("Email"),
+                showTextField("Enter your email", email, false),
+                SizedBox(height: size.height * 0.05),
+                showTexts("Password"),
+                showTextField("Enter your email", password, true),
+                SizedBox(height: size.height * 0.02),
+                rowText("By continuing you agree to our ", "Terms of Service",
+                    () => Get.to(() => const Home())),
+                rowText(
+                    "and", " Privacy Policy", () => Get.to(() => const Home())),
+                SizedBox(height: size.height * 0.01),
+                showButton("Sign Up", () => Get.to(() => const Home())),
+                SizedBox(height: size.height * 0.01),
+                accountText("Already have an account? ", "Sign in")
+              ],
+            ),
           ),
         ),
       ),
@@ -94,7 +96,7 @@ class _RegisterState extends State<Register> {
     return Text(
       text,
       style: GoogleFonts.quicksand(
-          fontSize: 16,
+          fontSize: 15,
           color: Colors.black54,
           fontWeight: FontWeight.w500,
           letterSpacing: 0.001),
@@ -156,7 +158,7 @@ class _RegisterState extends State<Register> {
     return Text(
       text,
       style: GoogleFonts.quicksand(
-          fontSize: 16,
+          fontSize: 15,
           color: Colors.green,
           fontWeight: FontWeight.w500,
           letterSpacing: 0.001),

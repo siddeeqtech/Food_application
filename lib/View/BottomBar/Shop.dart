@@ -26,7 +26,7 @@ class _ShopState extends State<Shop> {
                 // crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   showImage("carrot"),
-                  cityTexts("Dhoka", "Banassre"),
+                  cityTexts("Dhokas", "Banassre"),
                   showSearch(),
                   bodySubheading("Exclusive Offer", "see all", () => null),
                   exclusiveListCard(),

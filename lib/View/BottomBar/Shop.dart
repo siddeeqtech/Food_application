@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mongo_authentication/Constants/constants.dart';
+import 'package:mongo_authentication/Controller/ItemController.dart';
 
-import '../../Model/cardModel.dart';
+import '../Extras/productDetails.dart';
 
 class Shop extends StatefulWidget {
   const Shop({Key? key}) : super(key: key);
@@ -13,6 +15,7 @@ class Shop extends StatefulWidget {
 
 class _ShopState extends State<Shop> {
   final controller = TextEditingController();
+  final itemController = Get.put(ItemController());
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +23,14 @@ class _ShopState extends State<Shop> {
         backgroundColor: Colors.white,
         body: SafeArea(
           child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Column(
                 // crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   showImage("carrot"),
-                  cityTexts("Dhokas", "Banassre"),
+                  cityTexts("Dhoka", "Banassre"),
                   showSearch(),
                   bodySubheading("Exclusive Offer", "see all", () => null),
                   exclusiveListCard(),
@@ -204,233 +208,260 @@ class _ShopState extends State<Shop> {
   }
 
   Widget exclusiveListCard() {
-    List<CardModel> items = [
-      CardModel("Organic Bananas", "6", "bananas", 4.66),
-      CardModel("Red Apples", "5", "cou_4", 7.96),
-      CardModel("Olive Oil", "10", "cou_5", 4.41),
-      CardModel("Organic fruits", "20", "fruits", 8.32),
-      CardModel("Meat", "16", "meat", 10.32),
-    ];
     return SizedBox(
       width: MediaQuery.of(context).size.width * 2,
       height: MediaQuery.of(context).size.height * 0.26,
-      child: ListView.separated(
-          shrinkWrap: true,
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (context, index) {
-            return Container(
-              width: MediaQuery.of(context).size.width * 0.45,
-              height: MediaQuery.of(context).size.height * 0.26,
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black12, width: 1),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5),
-                child: Stack(
-                  children: [
-                    Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Center(
-                            child: cardImage(items.elementAt(index).imageUrl),
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          cardTitle(items.elementAt(index).title),
-                          Row(
-                            children: [
-                              showTexts("${items.elementAt(index).count}pcs,"),
-                              showTexts(" Price"),
-                            ],
-                          ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.width * 0.07,
-                          ),
-                          cardMoney("${items.elementAt(index).price}")
-                        ]),
-                    Positioned(
-                        bottom: 5,
-                        right: 5,
-                        child: Container(
-                          height: MediaQuery.of(context).size.height * 0.05,
-                          width: MediaQuery.of(context).size.width * 0.12,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: primaryColor),
-                          child: const Center(
-                            child: Icon(
-                              Icons.add,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ))
-                  ],
+      child: Obx(() {
+        return ListView.separated(
+            physics: const BouncingScrollPhysics(),
+            cacheExtent: 10,
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) {
+              return Container(
+                width: MediaQuery.of(context).size.width * 0.45,
+                height: MediaQuery.of(context).size.height * 0.26,
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black12, width: 1),
+                  borderRadius: BorderRadius.circular(10),
                 ),
-              ),
-            );
-          },
-          separatorBuilder: (BuildContext context, int index) {
-            return const Padding(padding: EdgeInsets.symmetric(horizontal: 5));
-          },
-          itemCount: items.length),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: Stack(
+                    children: [
+                      Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Center(
+                              child: InkWell(
+                                onTap: () => Get.to(() => ProductDetails(
+                                      count: itemController.exclusive
+                                          .elementAt(index)
+                                          .count,
+                                      imageUrl: itemController.exclusive
+                                          .elementAt(index)
+                                          .imageUrl,
+                                      price: itemController.exclusive
+                                          .elementAt(index)
+                                          .price,
+                                      title: itemController.exclusive
+                                          .elementAt(index)
+                                          .title,
+                                    )),
+                                child: cardImage(itemController.exclusive
+                                    .elementAt(index)
+                                    .imageUrl),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            cardTitle(itemController.exclusive
+                                .elementAt(index)
+                                .title),
+                            Row(
+                              children: [
+                                showTexts(
+                                    "${itemController.exclusive.elementAt(index).count}pcs,"),
+                                showTexts(" Price"),
+                              ],
+                            ),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.width * 0.07,
+                            ),
+                            cardMoney(
+                                "${itemController.exclusive.elementAt(index).price}")
+                          ]),
+                      Positioned(
+                          bottom: 5,
+                          right: 5,
+                          child: Container(
+                            height: MediaQuery.of(context).size.height * 0.05,
+                            width: MediaQuery.of(context).size.width * 0.12,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: primaryColor),
+                            child: const Center(
+                              child: Icon(
+                                Icons.add,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ))
+                    ],
+                  ),
+                ),
+              );
+            },
+            separatorBuilder: (BuildContext context, int index) {
+              return const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 5));
+            },
+            itemCount: itemController.exclusive.length);
+      }),
     );
   }
 
   Widget bestListCard() {
-    List<CardModel> items = [
-      CardModel("Pepper", "8", "pepper", 4.66),
-      CardModel("Garlic", "15", "garlic", 7.96),
-      CardModel("Chicken", "11", "chicken", 14.41),
-      CardModel("Red Meat", "22", "red_meat", 18.32),
-      CardModel("Bananas", "6", "bananas", 6.32),
-    ];
     return SizedBox(
       width: MediaQuery.of(context).size.width * 2,
       height: MediaQuery.of(context).size.height * 0.26,
-      child: ListView.separated(
-          shrinkWrap: true,
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (context, index) {
-            return Container(
-              width: MediaQuery.of(context).size.width * 0.45,
-              height: MediaQuery.of(context).size.height * 0.26,
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black12, width: 1),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5),
-                child: Stack(
-                  children: [
-                    Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Center(
-                            child: cardImage(items.elementAt(index).imageUrl),
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          cardTitle(items.elementAt(index).title),
-                          Row(
-                            children: [
-                              showTexts("${items.elementAt(index).count}pcs,"),
-                              showTexts(" Price"),
-                            ],
-                          ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.width * 0.07,
-                          ),
-                          cardMoney("${items.elementAt(index).price}")
-                        ]),
-                    Positioned(
-                        bottom: 5,
-                        right: 5,
-                        child: Container(
-                          height: MediaQuery.of(context).size.height * 0.05,
-                          width: MediaQuery.of(context).size.width * 0.12,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: primaryColor),
-                          child: const Center(
-                            child: Icon(
-                              Icons.add,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ))
-                  ],
+      child: Obx(() {
+        return ListView.separated(
+            physics: const BouncingScrollPhysics(),
+            cacheExtent: 10,
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) {
+              return Container(
+                width: MediaQuery.of(context).size.width * 0.45,
+                height: MediaQuery.of(context).size.height * 0.26,
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black12, width: 1),
+                  borderRadius: BorderRadius.circular(10),
                 ),
-              ),
-            );
-          },
-          separatorBuilder: (BuildContext context, int index) {
-            return const Padding(padding: EdgeInsets.symmetric(horizontal: 5));
-          },
-          itemCount: items.length),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: Stack(
+                    children: [
+                      Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Center(
+                              child: cardImage(itemController.best
+                                  .elementAt(index)
+                                  .imageUrl),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            cardTitle(
+                                itemController.best.elementAt(index).title),
+                            Row(
+                              children: [
+                                showTexts(
+                                    "${itemController.best.elementAt(index).count}pcs,"),
+                                showTexts(" Price"),
+                              ],
+                            ),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.width * 0.07,
+                            ),
+                            cardMoney(
+                                "${itemController.best.elementAt(index).price}")
+                          ]),
+                      Positioned(
+                          bottom: 5,
+                          right: 5,
+                          child: Container(
+                            height: MediaQuery.of(context).size.height * 0.05,
+                            width: MediaQuery.of(context).size.width * 0.12,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: primaryColor),
+                            child: const Center(
+                              child: Icon(
+                                Icons.add,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ))
+                    ],
+                  ),
+                ),
+              );
+            },
+            separatorBuilder: (BuildContext context, int index) {
+              return const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 5));
+            },
+            itemCount: itemController.best.length);
+      }),
     );
   }
 
   Widget groceriesListCard() {
-    List<CardModel> items = [
-      CardModel("Pepper", "5", "pepper", 14.66),
-      CardModel("Bananas", "2", "bananas", 26.32),
-      CardModel("Chicken", "21", "chicken", 10.41),
-      CardModel("Red Meat", "12", "red_meat", 18.32),
-      CardModel("Garlic", "13", "garlic", 17.96),
-    ];
     return SizedBox(
       width: MediaQuery.of(context).size.width * 2,
       height: MediaQuery.of(context).size.height * 0.26,
-      child: ListView.separated(
-          shrinkWrap: true,
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (context, index) {
-            return Container(
-              width: MediaQuery.of(context).size.width * 0.45,
-              height: MediaQuery.of(context).size.height * 0.26,
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black12, width: 1),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5),
-                child: Stack(
-                  children: [
-                    Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Center(
-                            child: cardImage(items.elementAt(index).imageUrl),
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          cardTitle(items.elementAt(index).title),
-                          Row(
-                            children: [
-                              showTexts("${items.elementAt(index).count}pcs,"),
-                              showTexts(" Price"),
-                            ],
-                          ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.width * 0.07,
-                          ),
-                          cardMoney("${items.elementAt(index).price}")
-                        ]),
-                    Positioned(
-                        bottom: 5,
-                        right: 5,
-                        child: Container(
-                          height: MediaQuery.of(context).size.height * 0.05,
-                          width: MediaQuery.of(context).size.width * 0.12,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: primaryColor),
-                          child: const Center(
-                            child: Icon(
-                              Icons.add,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ))
-                  ],
+      child: Obx(() {
+        return ListView.separated(
+            physics: const BouncingScrollPhysics(),
+            cacheExtent: 10,
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) {
+              return Container(
+                width: MediaQuery.of(context).size.width * 0.45,
+                height: MediaQuery.of(context).size.height * 0.26,
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black12, width: 1),
+                  borderRadius: BorderRadius.circular(10),
                 ),
-              ),
-            );
-          },
-          separatorBuilder: (BuildContext context, int index) {
-            return const Padding(padding: EdgeInsets.symmetric(horizontal: 5));
-          },
-          itemCount: items.length),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: Stack(
+                    children: [
+                      Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Center(
+                              child: cardImage(itemController.groceries
+                                  .elementAt(index)
+                                  .imageUrl),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            cardTitle(itemController.groceries
+                                .elementAt(index)
+                                .title),
+                            Row(
+                              children: [
+                                showTexts(
+                                    "${itemController.groceries.elementAt(index).count}pcs,"),
+                                showTexts(" Price"),
+                              ],
+                            ),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.width * 0.07,
+                            ),
+                            cardMoney(
+                                "${itemController.groceries.elementAt(index).price}")
+                          ]),
+                      Positioned(
+                          bottom: 5,
+                          right: 5,
+                          child: Container(
+                            height: MediaQuery.of(context).size.height * 0.05,
+                            width: MediaQuery.of(context).size.width * 0.12,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: primaryColor),
+                            child: const Center(
+                              child: Icon(
+                                Icons.add,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ))
+                    ],
+                  ),
+                ),
+              );
+            },
+            separatorBuilder: (BuildContext context, int index) {
+              return const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 5));
+            },
+            itemCount: itemController.groceries.length);
+      }),
     );
   }
 

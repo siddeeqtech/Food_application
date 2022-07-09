@@ -79,20 +79,23 @@ class _ProductDetailsState extends State<ProductDetails> {
   Widget productImage(String imageName) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15),
-      child: Container(
-        padding: const EdgeInsets.all(2),
-        height: MediaQuery.of(context).size.height * 0.24,
-        width: MediaQuery.of(context).size.width * 0.55,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: Image.asset(
-              "assets/$imageName.jpg",
-            ).image,
-            fit: BoxFit.fill,
-          ),
-          borderRadius: const BorderRadius.only(
-            bottomLeft: Radius.circular(10),
-            bottomRight: Radius.circular(10),
+      child: Hero(
+        tag: title,
+        child: Container(
+          padding: const EdgeInsets.all(2),
+          height: MediaQuery.of(context).size.height * 0.24,
+          width: MediaQuery.of(context).size.width * 0.55,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: Image.asset(
+                "assets/$imageName.jpg",
+              ).image,
+              fit: BoxFit.fill,
+            ),
+            borderRadius: const BorderRadius.only(
+              bottomLeft: Radius.circular(10),
+              bottomRight: Radius.circular(10),
+            ),
           ),
         ),
       ),

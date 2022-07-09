@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mongo_authentication/Constants/constants.dart';
 import 'package:mongo_authentication/Controller/ItemController.dart';
 
+import '../Extras/filter.dart';
 import '../Extras/productDetails.dart';
 
 class Shop extends StatefulWidget {
@@ -30,7 +31,9 @@ class _ShopState extends State<Shop> {
                 // crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   showImage("carrot"),
-                  cityTexts("Dhoka", "Banassre"),
+                  InkWell(
+                      onTap: () => Get.to(() => const Filters()),
+                      child: cityTexts("Dhoka", "Banassre")),
                   showSearch(),
                   bodySubheading("Exclusive Offer", "see all", () => null),
                   exclusiveListCard(),
@@ -250,9 +253,14 @@ class _ShopState extends State<Shop> {
                                           .elementAt(index)
                                           .title,
                                     )),
-                                child: cardImage(itemController.exclusive
-                                    .elementAt(index)
-                                    .imageUrl),
+                                child: Hero(
+                                  tag: itemController.exclusive
+                                      .elementAt(index)
+                                      .title,
+                                  child: cardImage(itemController.exclusive
+                                      .elementAt(index)
+                                      .imageUrl),
+                                ),
                               ),
                             ),
                             const SizedBox(

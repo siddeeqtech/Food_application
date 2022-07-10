@@ -46,7 +46,7 @@ class _FavouriteState extends State<Favourite> {
           return Container(
             padding: EdgeInsets.symmetric(
                 horizontal: size.width * 0.05, vertical: size.height * 0.025),
-            height: size.height * 0.18,
+            height: size.height * 0.13,
             width: double.infinity,
             decoration: BoxDecoration(
               color: Colors.white,
@@ -59,27 +59,47 @@ class _FavouriteState extends State<Favourite> {
               //   ),
               // ],
             ),
-            child: Row(
+            child: Stack(
               children: [
-                showImage("meat"),
-                const SizedBox(width: 10),
-                Expanded(
-                  flex: 1,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      cartTitle("Organic Bananas", () => null),
-                      Row(
-                        //mainAxisSize: MainAxisSize.min,
+                Row(
+                  children: [
+                    showImage("meat"),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          showTexts("${4}pcs,"),
-                          showTexts(" Priceg"),
+                          cartTitle("Organic Bananas", () => null),
+                          Row(
+                            //mainAxisSize: MainAxisSize.min,
+                            children: [
+                              showTexts("${4}pcs,"),
+                              showTexts(" Priceg"),
+                            ],
+                          ),
                         ],
                       ),
-                      cartCounter()
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
+                Positioned(
+                    bottom: 5,
+                    right: 5,
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.03,
+                      width: MediaQuery.of(context).size.width * 0.1,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: primaryColor),
+                      child: const Center(
+                        child: Icon(
+                          Icons.add,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ))
               ],
             ),
           );
@@ -102,8 +122,8 @@ class _FavouriteState extends State<Favourite> {
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Container(
         padding: const EdgeInsets.all(2),
-        height: MediaQuery.of(context).size.height * 0.1,
-        width: MediaQuery.of(context).size.width * 0.22,
+        height: MediaQuery.of(context).size.height * 0.08,
+        width: MediaQuery.of(context).size.width * 0.18,
         decoration: BoxDecoration(
           image: DecorationImage(
             image: Image.asset(
@@ -121,14 +141,7 @@ class _FavouriteState extends State<Favourite> {
       children: [
         showTitle(text),
         Expanded(child: Container()),
-        InkWell(
-          onTap: function,
-          child: const Icon(
-            Icons.clear,
-            color: Colors.grey,
-            size: 21,
-          ),
-        )
+        cardMoney(5.toString())
       ],
     );
   }
@@ -139,16 +152,6 @@ class _FavouriteState extends State<Favourite> {
       textAlign: TextAlign.center,
       style: GoogleFonts.roboto(
           fontSize: 20, color: Colors.black87, fontWeight: FontWeight.w500),
-    );
-  }
-
-  Widget cartCounter() {
-    return Row(
-      children: [
-        counter(),
-        Expanded(child: Container()),
-        cardMoney(5.toString())
-      ],
     );
   }
 

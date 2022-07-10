@@ -23,33 +23,6 @@ class _FiltersState extends State<Filters> {
     ));
   }
 
-  // Widget showFilters() {
-  //   bool checkedValue = false;
-  //   return Column(
-  //     children: [
-  //       GroupButton(
-  //         spacing: 5,
-  //         isRadio: false,
-  //         direction: Axis.horizontal,
-  //         onSelected: (index, isSelected) => print(
-  //             '$index button is ${isSelected ? 'selected' : 'unselected'}'),
-  //         buttons: [
-  //           "Dart",
-  //           "Kotlin",
-  //           "Java",
-  //           "Swift",
-  //           "Objective-C",
-  //           "Python",
-  //           "JS"
-  //         ],
-  //         selectedButtons: [0, 1],
-  //
-  //         /// [List)
-  //       ),
-  //     ],
-  //   );
-  // }
-
   Widget showTexts(String text) {
     return Text(
       text,

@@ -40,7 +40,7 @@ class _ExploreState extends State<Explore> {
         text,
         textAlign: TextAlign.center,
         style: GoogleFonts.quicksand(
-            fontSize: 27,
+            fontSize: 25,
             color: const Color.fromARGB(255, 24, 23, 37),
             fontWeight: FontWeight.w600),
       ),

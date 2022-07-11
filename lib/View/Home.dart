@@ -85,8 +85,8 @@ class _HomeState extends State<Home> {
     List<Widget> pages = [
       const Shop(),
       const Explore(),
-      const Cart(),
-      const Favourite(),
+      const Carts(),
+      const Favorite(),
       const Account(),
     ];
     return IndexedStack(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -118,6 +119,40 @@ class _OilState extends State<Oil> {
                               .toString())
                         ]),
                     Positioned(
+                        top: 1,
+                        left: 1,
+                        child: Center(
+                          child: InkWell(
+                            onTap: () async {
+                              await itemController.addFavorite(
+                                  itemController.beverages
+                                      .elementAt(index)
+                                      .title,
+                                  itemController.beverages
+                                      .elementAt(index)
+                                      .imageUrl,
+                                  itemController.beverages
+                                      .elementAt(index)
+                                      .count,
+                                  itemController.beverages
+                                      .elementAt(index)
+                                      .price);
+                              Fluttertoast.showToast(
+                                  msg: "Added to Favourites",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colors.black,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0);
+                            },
+                            child: Icon(
+                              Icons.favorite_border,
+                              color: Colors.grey[600],
+                            ),
+                          ),
+                        )),
+                    Positioned(
                         bottom: 5,
                         right: 5,
                         child: Container(
@@ -126,10 +161,35 @@ class _OilState extends State<Oil> {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                               color: primaryColor),
-                          child: const Center(
-                            child: Icon(
-                              Icons.add,
-                              color: Colors.white,
+                          child: Center(
+                            child: InkWell(
+                              onTap: () async {
+                                await itemController.addCarts(
+                                    itemController.beverages
+                                        .elementAt(index)
+                                        .title,
+                                    itemController.beverages
+                                        .elementAt(index)
+                                        .imageUrl,
+                                    itemController.beverages
+                                        .elementAt(index)
+                                        .count,
+                                    itemController.beverages
+                                        .elementAt(index)
+                                        .price);
+                                Fluttertoast.showToast(
+                                    msg: "Added to Cart",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.black,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0);
+                              },
+                              child: Icon(
+                                Icons.add,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ))

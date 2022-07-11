@@ -1,5 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
+import 'package:mongo_authentication/LocalModel/favouriteModel.dart';
+import '../Local/boxes.dart';
+import '../LocalModel/CartModel.dart';
 import '../Model/cardModel.dart';
 import '../View/Extras/ProductPages/Beverages.dart';
 import '../View/Extras/ProductPages/Bread.dart';
@@ -63,12 +69,6 @@ class ItemController extends GetxController {
     ProductModel("Bakery & Snacks", "bread", () => Get.to(() => const Bread())),
     ProductModel("Dairy & Eggs", "dairy", () => Get.to(() => const Dairy())),
     ProductModel("Beverages", "drinks", () => Get.to(() => const Beverages())),
-    ProductModel("Meat & Fish", "meat", () => Get.to(() => const Meat())),
-    ProductModel("Bakery & Snacks", "bread", () => Get.to(() => const Bread())),
-    ProductModel("Beverages", "drinks", () => Get.to(() => const Beverages())),
-    ProductModel("Cooking Oil & Ghee", "oil", () => Get.to(() => const Oil())),
-    ProductModel("Dairy & Eggs", "dairy", () => Get.to(() => const Dairy())),
-    ProductModel("Bakery & Snacks", "bread", () => Get.to(() => const Bread())),
   ].obs;
   addItem() {
     itemCount++;
@@ -76,5 +76,62 @@ class ItemController extends GetxController {
 
   removeItem() {
     itemCount--;
+  }
+
+  Future addFavourite(
+      String title, String path, String count, double price) async {
+    CollectionReference favourite =
+        FirebaseFirestore.instance.collection("Favourite");
+    await favourite.add({
+      "title": title,
+      "imageUrl": path,
+      "count": count,
+      "price": price,
+    });
+  }
+
+  Future addCart(String title, String path, String count, double price) async {
+    CollectionReference favourite =
+        FirebaseFirestore.instance.collection("Cart");
+    await favourite.add({
+      "title": title,
+      "image": path,
+      "count": count,
+      "price": price,
+    });
+  }
+
+  addFavorite(String title, String image, String count, double price) {
+    final favourite = Favourite()
+      ..image = image == "" ? "(No Image)" : image
+      ..count = count == "" ? "(No description)" : count
+      ..price = price == 0.0 ? 0.0 : price
+      ..title = title == "" ? "(No Title)" : title
+      ..isCompleted = false;
+
+    final box = Boxes.getFavourite();
+    box.add(favourite);
+  }
+
+  addCarts(String title, String image, String count, double price) {
+    final cart = Cart()
+      ..image = image == "" ? "(No Image)" : image
+      ..count = count == "" ? "(No description)" : count
+      ..price = price == 0.0 ? 0.0 : price
+      ..title = title == "" ? "(No Title)" : title
+      ..isCompleted = false;
+
+    final box = Boxes.getCart();
+    box.add(cart);
+  }
+
+  deleteFavourite(int index) {
+    final box = Hive.box<Favourite>('favorite');
+    box.deleteAt(index);
+  }
+
+  deleteCart(int index) {
+    final box = Hive.box<Cart>('cart');
+    box.deleteAt(index);
   }
 }

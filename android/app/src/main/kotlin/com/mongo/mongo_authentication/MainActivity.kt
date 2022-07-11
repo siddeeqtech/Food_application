@@ -1,4 +1,4 @@
-package com.mongo.mongo_authentication
+package com.daski
 
 import io.flutter.embedding.android.FlutterActivity
 

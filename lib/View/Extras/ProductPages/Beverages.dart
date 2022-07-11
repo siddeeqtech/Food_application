@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mongo_authentication/Controller/ItemController.dart';
@@ -12,8 +14,27 @@ class Beverages extends StatefulWidget {
   State<Beverages> createState() => _BeveragesState();
 }
 
-class _BeveragesState extends State<Beverages> {
+class _BeveragesState extends State<Beverages> with TickerProviderStateMixin {
+  late AnimationController controller;
+  late Animation animation;
   final itemController = Get.put(ItemController());
+  @override
+  void initState() {
+    super.initState();
+
+    controller = AnimationController(
+      duration: const Duration(milliseconds: 600), //controll animation duration
+      vsync: this,
+    )..addListener(() {
+        setState(() {});
+      });
+
+    animation = ColorTween(
+      begin: Colors.grey,
+      end: Colors.red,
+    ).animate(controller);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,9 +62,9 @@ class _BeveragesState extends State<Beverages> {
             decoration: const BoxDecoration(
               color: Colors.transparent,
             ),
-            child: const Icon(
+            child: Icon(
               Icons.arrow_back_ios,
-              color: Colors.black87,
+              color: animation.value,
             ),
           ),
           Expanded(child: Container()),
@@ -120,6 +141,40 @@ class _BeveragesState extends State<Beverages> {
                               .toString())
                         ]),
                     Positioned(
+                        top: 1,
+                        left: 1,
+                        child: Center(
+                          child: InkWell(
+                            onTap: () async {
+                              await itemController.addFavorite(
+                                  itemController.beverages
+                                      .elementAt(index)
+                                      .title,
+                                  itemController.beverages
+                                      .elementAt(index)
+                                      .imageUrl,
+                                  itemController.beverages
+                                      .elementAt(index)
+                                      .count,
+                                  itemController.beverages
+                                      .elementAt(index)
+                                      .price);
+                              Fluttertoast.showToast(
+                                  msg: "Added to Favourites",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colors.black,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0);
+                            },
+                            child: Icon(
+                              Icons.favorite_border,
+                              color: animation.value,
+                            ),
+                          ),
+                        )),
+                    Positioned(
                         bottom: 5,
                         right: 5,
                         child: Container(
@@ -128,10 +183,35 @@ class _BeveragesState extends State<Beverages> {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                               color: primaryColor),
-                          child: const Center(
-                            child: Icon(
-                              Icons.add,
-                              color: Colors.white,
+                          child: Center(
+                            child: InkWell(
+                              onTap: () async {
+                                await itemController.addCarts(
+                                    itemController.beverages
+                                        .elementAt(index)
+                                        .title,
+                                    itemController.beverages
+                                        .elementAt(index)
+                                        .imageUrl,
+                                    itemController.beverages
+                                        .elementAt(index)
+                                        .count,
+                                    itemController.beverages
+                                        .elementAt(index)
+                                        .price);
+                                Fluttertoast.showToast(
+                                    msg: "Added to Cart",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.black,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0);
+                              },
+                              child: Icon(
+                                Icons.add,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ))

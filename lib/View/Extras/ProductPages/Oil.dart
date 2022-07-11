@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../Constants/constants.dart';
 import '../../../Controller/ItemController.dart';
+import '../productDetails.dart';
 
 class Oil extends StatefulWidget {
   const Oil({Key? key}) : super(key: key);
@@ -45,6 +46,7 @@ class _OilState extends State<Oil> {
             child: const Icon(
               Icons.arrow_back_ios,
               color: Colors.black87,
+              size: 18,
             ),
           ),
           Expanded(child: Container()),
@@ -57,6 +59,7 @@ class _OilState extends State<Oil> {
             child: const Icon(
               Icons.file_upload_outlined,
               color: Colors.black87,
+              size: 28,
             ),
           ),
         ],
@@ -96,8 +99,28 @@ class _OilState extends State<Oil> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Center(
-                            child: cardImage(
-                                itemController.best.elementAt(index).imageUrl),
+                            child: InkWell(
+                              onTap: () => Get.to(() => ProductDetails(
+                                    count: itemController.best
+                                        .elementAt(index)
+                                        .count,
+                                    imageUrl: itemController.best
+                                        .elementAt(index)
+                                        .imageUrl,
+                                    price: itemController.best
+                                        .elementAt(index)
+                                        .price,
+                                    title: itemController.best
+                                        .elementAt(index)
+                                        .title,
+                                  )),
+                              child: Hero(
+                                tag: itemController.best.elementAt(index).title,
+                                child: cardImage(itemController.best
+                                    .elementAt(index)
+                                    .imageUrl),
+                              ),
+                            ),
                           ),
                           const SizedBox(
                             height: 5,
@@ -125,18 +148,10 @@ class _OilState extends State<Oil> {
                           child: InkWell(
                             onTap: () async {
                               await itemController.addFavorite(
-                                  itemController.beverages
-                                      .elementAt(index)
-                                      .title,
-                                  itemController.beverages
-                                      .elementAt(index)
-                                      .imageUrl,
-                                  itemController.beverages
-                                      .elementAt(index)
-                                      .count,
-                                  itemController.beverages
-                                      .elementAt(index)
-                                      .price);
+                                  itemController.best.elementAt(index).title,
+                                  itemController.best.elementAt(index).imageUrl,
+                                  itemController.best.elementAt(index).count,
+                                  itemController.best.elementAt(index).price);
                               Fluttertoast.showToast(
                                   msg: "Added to Favourites",
                                   toastLength: Toast.LENGTH_SHORT,
@@ -149,6 +164,7 @@ class _OilState extends State<Oil> {
                             child: Icon(
                               Icons.favorite_border,
                               color: Colors.grey[600],
+                              size: 20,
                             ),
                           ),
                         )),
@@ -165,18 +181,12 @@ class _OilState extends State<Oil> {
                             child: InkWell(
                               onTap: () async {
                                 await itemController.addCarts(
-                                    itemController.beverages
-                                        .elementAt(index)
-                                        .title,
-                                    itemController.beverages
+                                    itemController.best.elementAt(index).title,
+                                    itemController.best
                                         .elementAt(index)
                                         .imageUrl,
-                                    itemController.beverages
-                                        .elementAt(index)
-                                        .count,
-                                    itemController.beverages
-                                        .elementAt(index)
-                                        .price);
+                                    itemController.best.elementAt(index).count,
+                                    itemController.best.elementAt(index).price);
                                 Fluttertoast.showToast(
                                     msg: "Added to Cart",
                                     toastLength: Toast.LENGTH_SHORT,
@@ -186,9 +196,10 @@ class _OilState extends State<Oil> {
                                     textColor: Colors.white,
                                     fontSize: 16.0);
                               },
-                              child: Icon(
+                              child: const Icon(
                                 Icons.add,
                                 color: Colors.white,
+                                size: 18,
                               ),
                             ),
                           ),

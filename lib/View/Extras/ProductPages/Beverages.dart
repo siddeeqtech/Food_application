@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mongo_authentication/Controller/ItemController.dart';
 
 import '../../../Constants/constants.dart';
+import '../productDetails.dart';
 
 class Beverages extends StatefulWidget {
   const Beverages({Key? key}) : super(key: key);
@@ -62,9 +63,10 @@ class _BeveragesState extends State<Beverages> with TickerProviderStateMixin {
             decoration: const BoxDecoration(
               color: Colors.transparent,
             ),
-            child: Icon(
+            child: const Icon(
               Icons.arrow_back_ios,
-              color: animation.value,
+              color: Colors.black87,
+              size: 18,
             ),
           ),
           Expanded(child: Container()),
@@ -77,6 +79,7 @@ class _BeveragesState extends State<Beverages> with TickerProviderStateMixin {
             child: const Icon(
               Icons.file_upload_outlined,
               color: Colors.black87,
+              size: 18,
             ),
           ),
         ],
@@ -116,9 +119,30 @@ class _BeveragesState extends State<Beverages> with TickerProviderStateMixin {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Center(
-                            child: cardImage(itemController.beverages
-                                .elementAt(index)
-                                .imageUrl),
+                            child: InkWell(
+                              onTap: () => Get.to(() => ProductDetails(
+                                    count: itemController.beverages
+                                        .elementAt(index)
+                                        .count,
+                                    imageUrl: itemController.beverages
+                                        .elementAt(index)
+                                        .imageUrl,
+                                    price: itemController.beverages
+                                        .elementAt(index)
+                                        .price,
+                                    title: itemController.beverages
+                                        .elementAt(index)
+                                        .title,
+                                  )),
+                              child: Hero(
+                                tag: itemController.beverages
+                                    .elementAt(index)
+                                    .title,
+                                child: cardImage(itemController.beverages
+                                    .elementAt(index)
+                                    .imageUrl),
+                              ),
+                            ),
                           ),
                           const SizedBox(
                             height: 5,
@@ -171,6 +195,7 @@ class _BeveragesState extends State<Beverages> with TickerProviderStateMixin {
                             child: Icon(
                               Icons.favorite_border,
                               color: animation.value,
+                              size: 20,
                             ),
                           ),
                         )),
@@ -178,8 +203,8 @@ class _BeveragesState extends State<Beverages> with TickerProviderStateMixin {
                         bottom: 5,
                         right: 5,
                         child: Container(
-                          height: MediaQuery.of(context).size.height * 0.05,
-                          width: MediaQuery.of(context).size.width * 0.12,
+                          height: MediaQuery.of(context).size.height * 0.045,
+                          width: MediaQuery.of(context).size.width * 0.1,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                               color: primaryColor),
@@ -208,9 +233,10 @@ class _BeveragesState extends State<Beverages> with TickerProviderStateMixin {
                                     textColor: Colors.white,
                                     fontSize: 16.0);
                               },
-                              child: Icon(
+                              child: const Icon(
                                 Icons.add,
                                 color: Colors.white,
+                                size: 18,
                               ),
                             ),
                           ),

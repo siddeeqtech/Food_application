@@ -1,8 +1,15 @@
+import 'dart:async';
+
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mongo_authentication/View/Login.dart';
 import 'package:mongo_authentication/View/background.dart';
 import 'package:mongo_authentication/View/location.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'Home.dart';
 
 class Welcome extends StatefulWidget {
   const Welcome({Key? key}) : super(key: key);
@@ -11,7 +18,26 @@ class Welcome extends StatefulWidget {
   State<Welcome> createState() => _WelcomeState();
 }
 
-class _WelcomeState extends State<Welcome> {
+class _WelcomeState extends State<Welcome> with AfterLayoutMixin<Welcome> {
+  Future checkFirstSeen() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool seen = (prefs.getBool('seen') ?? false);
+
+    if (seen) {
+      Get.off(() => const Home());
+    } else {
+      await prefs.setBool('seen', true);
+      Get.off(() => const Login());
+    }
+  }
+
+  @override
+  void afterFirstLayout(BuildContext context) {
+    Timer(const Duration(milliseconds: 500), () {
+      checkFirstSeen();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return BackGround(
@@ -26,7 +52,7 @@ class _WelcomeState extends State<Welcome> {
             showTitle("to our Store"),
             const SizedBox(height: 5),
             showDescription("Get your groceries in as fast as one hour"),
-            showButton("Get Started", () => Get.to(() => const Residence()))
+            // showButton("Get Started", () => Get.to(() => const Login()))
           ],
         ),
       ),

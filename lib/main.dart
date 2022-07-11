@@ -10,7 +10,7 @@ import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp();
+  await Firebase.initializeApp();
   await Hive.initFlutter();
   Hive.registerAdapter(CartAdapter());
   Hive.registerAdapter(FavouriteAdapter());

@@ -254,6 +254,7 @@ class _ShopState extends State<Shop> {
                                           .title,
                                     )),
                                 child: Hero(
+                                  transitionOnUserGestures: true,
                                   tag: itemController.exclusive
                                       .elementAt(index)
                                       .title,

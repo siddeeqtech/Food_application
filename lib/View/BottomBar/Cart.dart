@@ -31,7 +31,7 @@ class _CartsState extends State<Carts> {
             children: [
               introTitle("My Cart"),
               cartCard(),
-              showButton("Add to cart", () => null)
+              showButton("Add all to cart", () => null)
             ],
           ),
         ),

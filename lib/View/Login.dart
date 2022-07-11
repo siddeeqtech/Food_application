@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'Home.dart';
 import 'Register.dart';
 
 class Login extends StatefulWidget {
@@ -14,6 +15,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final email = TextEditingController();
   final password = TextEditingController();
+  final phone = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -27,19 +29,22 @@ class _LoginState extends State<Login> {
               children: [
                 getBack(),
                 showImage("carrot"),
-                showTitle("Loging"),
+                showTitle("Log in"),
                 showTexts("Enter your emails and passwords"),
                 SizedBox(height: size.height * 0.05),
                 showTexts("Email"),
                 showTextField("Enter your email", email, false),
                 SizedBox(height: size.height * 0.05),
+                showTexts("Phone"),
+                showTextField("Enter your email", phone, false),
+                SizedBox(height: size.height * 0.05),
                 showTexts("Password"),
                 showTextField("Enter your email", password, true),
                 forgotPassword("Forgot password?"),
-                showButton("Log In", () => Get.to(() => const Register())),
+                showButton("Log In", () => Get.off(() => const Home())),
                 SizedBox(height: size.height * 0.001),
                 accountText("Dont have an account? ", "Sign Up",
-                    () => Get.to(() => const Register()))
+                    () => Get.off(() => const Register()))
               ],
             ),
           ),

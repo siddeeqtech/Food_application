@@ -50,21 +50,29 @@ class _ProductDetailsState extends State<ProductDetails> {
                 children: [
                   getBack(),
                   Center(child: productImage(imageUrl)),
+                  Divider(
+                    thickness: 1,
+                    color: Colors.grey[400],
+                  ),
                   productTitle(title),
                   showTexts(count),
                   productCounter(),
+                  Divider(
+                    thickness: 1,
+                    color: Colors.grey[400],
+                  ),
                   expansionPanel(
                       "Product Details",
                       """Hi there, I'm a drop-in replacement for Flutter's ExpansionTile.
                         Use me any time you think your app could benefit from being just a bit more Material.
                         These buttons control the next card down!""",
                       cardA),
-                  expansionPanel(
-                      "Nutrition",
-                      """Hi there, I'm a drop-in replacement for Flutter's ExpansionTile.
-                        Use me any time you think your app could benefit from being just a bit more Material.
-                        These buttons control the next card down!""",
-                      cardB),
+                  // expansionPanel(
+                  //     "Nutrition",
+                  //     """Hi there, I'm a drop-in replacement for Flutter's ExpansionTile.
+                  //       Use me any time you think your app could benefit from being just a bit more Material.
+                  //       These buttons control the next card down!""",
+                  //     cardB),
                   review(),
                   showButton("Add to Basket", () {
                     itemController.itemCount.value = 0;
@@ -80,11 +88,12 @@ class _ProductDetailsState extends State<ProductDetails> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15),
       child: Hero(
+        transitionOnUserGestures: true,
         tag: title,
         child: Container(
           padding: const EdgeInsets.all(2),
-          height: MediaQuery.of(context).size.height * 0.24,
-          width: MediaQuery.of(context).size.width * 0.55,
+          height: MediaQuery.of(context).size.height * 0.2,
+          width: MediaQuery.of(context).size.width * 0.5,
           decoration: BoxDecoration(
             image: DecorationImage(
               image: Image.asset(
@@ -113,10 +122,8 @@ class _ProductDetailsState extends State<ProductDetails> {
             decoration: const BoxDecoration(
               color: Colors.transparent,
             ),
-            child: const Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black87,
-            ),
+            child: const Icon(Icons.arrow_back_ios,
+                color: Colors.black87, size: 18),
           ),
           Expanded(child: Container()),
           Container(
@@ -128,6 +135,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             child: const Icon(
               Icons.file_upload_outlined,
               color: Colors.black87,
+              size: 18,
             ),
           ),
         ],
@@ -145,13 +153,17 @@ class _ProductDetailsState extends State<ProductDetails> {
             text,
             textAlign: TextAlign.center,
             style: GoogleFonts.roboto(
-                fontSize: 27,
+                fontSize: 21,
                 color: Colors.black87,
                 fontWeight: FontWeight.w500),
           ),
           Expanded(child: Container()),
           IconButton(
-              icon: Icon(Icons.favorite, color: favColor),
+              icon: Icon(
+                Icons.favorite,
+                color: favColor,
+                size: 20,
+              ),
               onPressed: () {
                 setState(() {
                   favColor = Colors.red;
@@ -245,11 +257,11 @@ class _ProductDetailsState extends State<ProductDetails> {
   Widget cardMoney(String text) {
     return Row(
       children: [
-        const Icon(Icons.attach_money, color: Colors.black87, size: 25),
+        const Icon(Icons.attach_money, color: Colors.black87, size: 18),
         Text(
           text,
           style: GoogleFonts.quicksand(
-              fontSize: 22,
+              fontSize: 18,
               color: Colors.black87,
               fontWeight: FontWeight.w600,
               letterSpacing: 0.001),

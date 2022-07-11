@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../Constants/constants.dart';
 import '../../../Controller/ItemController.dart';
+import '../productDetails.dart';
 
 class Dairy extends StatefulWidget {
   const Dairy({Key? key}) : super(key: key);
@@ -42,10 +43,8 @@ class _DairyState extends State<Dairy> {
             decoration: const BoxDecoration(
               color: Colors.transparent,
             ),
-            child: const Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black87,
-            ),
+            child: const Icon(Icons.arrow_back_ios,
+                color: Colors.black87, size: 18),
           ),
           Expanded(child: Container()),
           Container(
@@ -57,6 +56,7 @@ class _DairyState extends State<Dairy> {
             child: const Icon(
               Icons.file_upload_outlined,
               color: Colors.black87,
+              size: 18,
             ),
           ),
         ],
@@ -96,8 +96,28 @@ class _DairyState extends State<Dairy> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Center(
-                            child: cardImage(
-                                itemController.eggs.elementAt(index).imageUrl),
+                            child: InkWell(
+                              onTap: () => Get.to(() => ProductDetails(
+                                    count: itemController.eggs
+                                        .elementAt(index)
+                                        .count,
+                                    imageUrl: itemController.eggs
+                                        .elementAt(index)
+                                        .imageUrl,
+                                    price: itemController.eggs
+                                        .elementAt(index)
+                                        .price,
+                                    title: itemController.eggs
+                                        .elementAt(index)
+                                        .title,
+                                  )),
+                              child: Hero(
+                                tag: itemController.eggs.elementAt(index).title,
+                                child: cardImage(itemController.eggs
+                                    .elementAt(index)
+                                    .imageUrl),
+                              ),
+                            ),
                           ),
                           const SizedBox(
                             height: 5,
@@ -149,6 +169,7 @@ class _DairyState extends State<Dairy> {
                             child: Icon(
                               Icons.favorite_border,
                               color: Colors.grey[600],
+                              size: 20,
                             ),
                           ),
                         )),
@@ -156,8 +177,8 @@ class _DairyState extends State<Dairy> {
                         bottom: 5,
                         right: 5,
                         child: Container(
-                          height: MediaQuery.of(context).size.height * 0.05,
-                          width: MediaQuery.of(context).size.width * 0.12,
+                          height: MediaQuery.of(context).size.height * 0.045,
+                          width: MediaQuery.of(context).size.width * 0.1,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                               color: primaryColor),
@@ -186,9 +207,10 @@ class _DairyState extends State<Dairy> {
                                     textColor: Colors.white,
                                     fontSize: 16.0);
                               },
-                              child: Icon(
+                              child: const Icon(
                                 Icons.add,
                                 color: Colors.white,
+                                size: 18,
                               ),
                             ),
                           ),

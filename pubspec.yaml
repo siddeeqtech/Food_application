@@ -49,6 +49,8 @@ dependencies:
   hive_flutter: ^1.1.0
   hive_generator: ^1.1.3
   build_runner: ^2.1.11
+  shared_preferences: ^2.0.15
+  after_layout: ^1.2.0
 
 
 dev_dependencies:

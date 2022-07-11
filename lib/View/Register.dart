@@ -16,6 +16,7 @@ class _RegisterState extends State<Register> {
   final email = TextEditingController();
   final password = TextEditingController();
   final username = TextEditingController();
+  final phone = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -33,7 +34,10 @@ class _RegisterState extends State<Register> {
                 showTexts("Enter your credentials to continue"),
                 SizedBox(height: size.height * 0.05),
                 showTexts("Username"),
-                showTextField("Enter your name", email, false),
+                showTextField("Enter your name", username, false),
+                SizedBox(height: size.height * 0.05),
+                showTexts("Phone"),
+                showTextField("Enter your phone number", phone, false),
                 SizedBox(height: size.height * 0.05),
                 showTexts("Email"),
                 showTextField("Enter your email", email, false),
@@ -42,13 +46,13 @@ class _RegisterState extends State<Register> {
                 showTextField("Enter your email", password, true),
                 SizedBox(height: size.height * 0.02),
                 rowText("By continuing you agree to our ", "Terms of Service",
-                    () => Get.to(() => const Home())),
-                rowText(
-                    "and", " Privacy Policy", () => Get.to(() => const Home())),
+                    () => Get.off(() => const Home())),
+                rowText("and", " Privacy Policy",
+                    () => Get.off(() => const Home())),
                 SizedBox(height: size.height * 0.01),
-                showButton("Sign Up", () => Get.to(() => const Home())),
+                showButton("Sign Up", () => Get.off(() => const Home())),
+                accountText("Already have an account? ", "Sign in"),
                 SizedBox(height: size.height * 0.01),
-                accountText("Already have an account? ", "Sign in")
               ],
             ),
           ),

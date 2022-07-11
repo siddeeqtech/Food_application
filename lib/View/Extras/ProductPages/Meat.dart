@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../Constants/constants.dart';
 import '../../../Controller/ItemController.dart';
+import '../productDetails.dart';
 
 class Meat extends StatefulWidget {
   const Meat({Key? key}) : super(key: key);
@@ -96,8 +97,28 @@ class _MeatState extends State<Meat> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Center(
-                            child: cardImage(
-                                itemController.best.elementAt(index).imageUrl),
+                            child: InkWell(
+                              onTap: () => Get.to(() => ProductDetails(
+                                    count: itemController.best
+                                        .elementAt(index)
+                                        .count,
+                                    imageUrl: itemController.best
+                                        .elementAt(index)
+                                        .imageUrl,
+                                    price: itemController.best
+                                        .elementAt(index)
+                                        .price,
+                                    title: itemController.best
+                                        .elementAt(index)
+                                        .title,
+                                  )),
+                              child: Hero(
+                                tag: itemController.best.elementAt(index).title,
+                                child: cardImage(itemController.best
+                                    .elementAt(index)
+                                    .imageUrl),
+                              ),
+                            ),
                           ),
                           const SizedBox(
                             height: 5,
@@ -149,6 +170,7 @@ class _MeatState extends State<Meat> {
                             child: Icon(
                               Icons.favorite_border,
                               color: Colors.grey[600],
+                              size: 20,
                             ),
                           ),
                         )),
@@ -156,8 +178,8 @@ class _MeatState extends State<Meat> {
                         bottom: 5,
                         right: 5,
                         child: Container(
-                          height: MediaQuery.of(context).size.height * 0.05,
-                          width: MediaQuery.of(context).size.width * 0.12,
+                          height: MediaQuery.of(context).size.height * 0.045,
+                          width: MediaQuery.of(context).size.width * 0.1,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                               color: primaryColor),
@@ -165,18 +187,12 @@ class _MeatState extends State<Meat> {
                             child: InkWell(
                               onTap: () async {
                                 await itemController.addCarts(
-                                    itemController.beverages
-                                        .elementAt(index)
-                                        .title,
-                                    itemController.beverages
+                                    itemController.best.elementAt(index).title,
+                                    itemController.best
                                         .elementAt(index)
                                         .imageUrl,
-                                    itemController.beverages
-                                        .elementAt(index)
-                                        .count,
-                                    itemController.beverages
-                                        .elementAt(index)
-                                        .price);
+                                    itemController.best.elementAt(index).count,
+                                    itemController.best.elementAt(index).price);
                                 Fluttertoast.showToast(
                                     msg: "Added to Cart",
                                     toastLength: Toast.LENGTH_SHORT,
@@ -189,6 +205,7 @@ class _MeatState extends State<Meat> {
                               child: Icon(
                                 Icons.add,
                                 color: Colors.white,
+                                size: 18,
                               ),
                             ),
                           ),

@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../Constants/constants.dart';
 import '../../../Controller/ItemController.dart';
+import '../productDetails.dart';
 
 class Fruits extends StatefulWidget {
   const Fruits({Key? key}) : super(key: key);
@@ -45,6 +46,7 @@ class _FruitsState extends State<Fruits> {
             child: const Icon(
               Icons.arrow_back_ios,
               color: Colors.black87,
+              size: 18,
             ),
           ),
           Expanded(child: Container()),
@@ -57,6 +59,7 @@ class _FruitsState extends State<Fruits> {
             child: const Icon(
               Icons.file_upload_outlined,
               color: Colors.black87,
+              size: 18,
             ),
           ),
         ],
@@ -96,8 +99,28 @@ class _FruitsState extends State<Fruits> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Center(
-                            child: cardImage(
-                                itemController.best.elementAt(index).imageUrl),
+                            child: InkWell(
+                              onTap: () => Get.to(() => ProductDetails(
+                                    count: itemController.best
+                                        .elementAt(index)
+                                        .count,
+                                    imageUrl: itemController.best
+                                        .elementAt(index)
+                                        .imageUrl,
+                                    price: itemController.best
+                                        .elementAt(index)
+                                        .price,
+                                    title: itemController.best
+                                        .elementAt(index)
+                                        .title,
+                                  )),
+                              child: Hero(
+                                tag: itemController.best.elementAt(index).title,
+                                child: cardImage(itemController.best
+                                    .elementAt(index)
+                                    .imageUrl),
+                              ),
+                            ),
                           ),
                           const SizedBox(
                             height: 5,
@@ -149,6 +172,7 @@ class _FruitsState extends State<Fruits> {
                             child: Icon(
                               Icons.favorite_border,
                               color: Colors.grey[600],
+                              size: 20,
                             ),
                           ),
                         )),
@@ -186,9 +210,10 @@ class _FruitsState extends State<Fruits> {
                                     textColor: Colors.white,
                                     fontSize: 16.0);
                               },
-                              child: Icon(
+                              child: const Icon(
                                 Icons.add,
                                 color: Colors.white,
+                                size: 18,
                               ),
                             ),
                           ),

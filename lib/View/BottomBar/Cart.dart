@@ -64,7 +64,7 @@ class _CartsState extends State<Carts> {
         text,
         textAlign: TextAlign.center,
         style: GoogleFonts.quicksand(
-            fontSize: 25,
+            fontSize: 20,
             color: const Color.fromARGB(255, 24, 23, 37),
             fontWeight: FontWeight.w600),
       ),
@@ -155,8 +155,8 @@ class CartCardWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Container(
         padding: const EdgeInsets.all(2),
-        height: MediaQuery.of(context).size.height * 0.1,
-        width: MediaQuery.of(context).size.width * 0.22,
+        height: MediaQuery.of(context).size.height * 0.09,
+        width: MediaQuery.of(context).size.width * 0.18,
         decoration: BoxDecoration(
           image: DecorationImage(
             image: Image.asset(
@@ -199,8 +199,8 @@ class CartCardWidget extends StatelessWidget {
             onPressed: () => itemController.removeItem(),
           ),
           Container(
-            height: MediaQuery.of(context).size.height * 0.04,
-            width: MediaQuery.of(context).size.width * 0.1,
+            height: MediaQuery.of(context).size.height * 0.035,
+            width: MediaQuery.of(context).size.width * 0.08,
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(10)),
               border: Border.all(

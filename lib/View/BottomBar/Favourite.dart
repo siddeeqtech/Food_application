@@ -74,7 +74,7 @@ class _FavoriteState extends State<Favorite> {
         text,
         textAlign: TextAlign.center,
         style: GoogleFonts.quicksand(
-            fontSize: 25,
+            fontSize: 20,
             color: const Color.fromARGB(255, 24, 23, 37),
             fontWeight: FontWeight.w600),
       ),
